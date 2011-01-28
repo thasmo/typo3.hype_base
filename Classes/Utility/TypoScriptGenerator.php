@@ -70,46 +70,7 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 			);
 
 			$TCA['sys_template']['columns']['include_static_file']['config']['items'][] = $item;
-
-			/*
-			# add to layout stack
-			if(preg_match('~^Layout\/~', $dir)) {
-				array_push(self::$layouts, str_replace('Layout/', '', $dir));
-			}
-			*/
 		}
-
-		/*
-		$data = 'TCEFORM.pages {
-			layout.removeItems = 1,2,3
-
-			layout.altLabels.0 =';
-
-		$constants = '';
-		$setup = '';
-
-		foreach(self::$layouts as $key => $layout) {
-			$id = $key + 4;
-
-			$data .= chr(10) . 'layout.addItems.' . $id . ' = ' . str_replace('/', ' › ', $layout);
-
-			$constants .= '
-			[globalVar = TSFE:page|layout = ' . $id . ']
-			<INCLUDE_TYPOSCRIPT: source="FILE: typo3conf/ext/hype_base/Resources/Private/TypoScript/' . $layout . '/constants.txt">
-			[global]';
-
-			$setup .= '
-			[globalVar = TSFE:page|layout = ' . $id . ']
-			<INCLUDE_TYPOSCRIPT: source="FILE: typo3conf/ext/hype_base/Resources/Private/TypoScript/' . $layout . '/setup.txt">
-			[global]';
-		}
-
-		$data .= chr(10) . '}';
-
-		t3lib_extMgm::addPageTSConfig($data);
-		t3lib_extMgm::addTypoScriptConstants($constants);
-		t3lib_extMgm::addTypoScriptSetup($setup);
-		*/
 	}
 }
 
