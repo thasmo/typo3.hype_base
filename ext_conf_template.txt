@@ -1,2 +1,2 @@
-# cat=hype_base/typo/t01; type=string; label = TYPOSCRIPT PATH:Set shadowbox players which should get included always. (img,iframe,html,flv,swf,wmp,qt)
-typoscriptPath = # EXT:hype_project/Resources/Public/TypoScript/
+# cat=basic/links/001; type=string; label = TypoScript Directory: This is the path of the directory from which static TypoScript files are retrieved.
+typoscriptPath =
