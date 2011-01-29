@@ -1,0 +1,58 @@
+
+EXT: Hype Base
+Extension Key: hype_base
+Language: en
+Keywords: hype, typoscript, template
+Copyright 2011, Thomas "Thasmo" Deinhamer, <thasmo@gmail.com>
+
+This document is published under the Open Content License
+available from http://www.opencontent.org/opl.shtml
+
+The content of this document is related to TYPO3 
+- a GNU/GPL CMS/Framework available from www.typo3.org
+
+Table of Contents
+EXT: Hype Base	1
+Introduction	3
+What does it do?	3
+Screenshots	3
+Users manual	4
+Administration	5
+Configuration	6
+Reference	6
+Tutorial	7
+Known problems	8
+To-Do list	9
+
+Introduction
+What does it do?
+Hype Base provides the possibility to list static TypoScript files inside a template record in the field “include static (from extensions) from within a defined directory.
+Every directory within the defined inclusion directory will be listed as a separate item in the select field. In every directory within the defined TypoScript directory you can store static TypoScript files like setup.txt, constants.txt, include_static.txt, editorcfg.txt and include_static_file.txt.
+If you select an item in the select field, which represents a specific directory, the files within this directory will get included as a static TypoScript template.
+
+Screenshots
+
+Users manual
+A user manual does not apply as this extension is intended to be used by administrators and developers only.
+Administration
+From within a template record it is possible to select the static TypoScript files using the field “Include static (from extensions)” which are being added by the extension automatically.
+Just open a template record, locate the select field and select the static TypoScript files to include them on the page.
+Configuration
+Configuring the extension is easy. In the extension manager it’s possible to define the path of the directory where all static TypoScript files are stored. It’s also possible to prefix the path with a prefix like “EXT:key” which gets resolved to the actual path.
+Reference
+Property:
+Data type:
+Description:
+Default:
+typoscriptPath
+string
+Path of the directory from which static TypoScript files are retrieved.
+
+Example
+typoscriptPath = EXT:key/Resources/Private/TypoScript/
+Tutorial
+No tutorial available.
+Known problems
+No problems known.
+To-Do list
+Hype Base on forge.typo3.org
