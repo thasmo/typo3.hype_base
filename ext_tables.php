@@ -8,7 +8,18 @@ if(!defined('TYPO3_MODE'))
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'Hype Base');
 
 # add dynamic setup and constants
-require_once t3lib_extMgm::extPath($_EXTKEY) . 'Classes/Utility/TypoScriptGenerator.php';
-Tx_HypeBase_Utility_TypoScriptGeneratorUtility::createTypoScript();
+$path = PATH_site . '/typo3temp/hypebase.txt';
+
+if(file_exists($path)) {
+
+	$contents = @file_get_contents($path);
+	$files = unserialize($contents);
+
+	if(count($files) > 0) {
+		global $TCA;
+		t3lib_div::loadTCA('sys_template');
+		$TCA['sys_template']['columns']['include_static_file']['config']['items'] = array_merge($TCA['sys_template']['columns']['include_static_file']['config']['items'], $files);
+	}
+}
 
 ?>
