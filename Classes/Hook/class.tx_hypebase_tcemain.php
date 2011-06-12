@@ -27,11 +27,15 @@ require_once t3lib_extMgm::extPath('hype_base') . 'Classes/Utility/TypoScriptGen
 
 class tx_hypebase_tcemain {
 
-	function clear_cacheCmd($command, $TCE) {
+	protected $registry;
 
+	function __construct() {
+		$this->registry = t3lib_div::makeInstance('t3lib_Registry');
+	}
+
+	function clear_cacheCmd($command, $TCE) {
 		if($TCE->admin || $TCE->BE_USER->getTSConfigVal('options.clearCache.all')) {
-			$contents = serialize(Tx_HypeBase_Utility_TypoScriptGeneratorUtility::createTypoScript());
-			@file_put_contents(PATH_site . '/typo3temp/hypebase.txt', $contents);
+			$this->registry->set('tx_hypebase', 'templates', Tx_HypeBase_Utility_TypoScriptGeneratorUtility::createTypoScript());
 		}
 	}
 }
