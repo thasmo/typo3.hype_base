@@ -1,7 +1,15 @@
 <?php
 
 class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
+
+	/**
+	 * @var array Holds pathes to static template files
+	 */
 	static protected $cache = array();
+
+	/**
+	 * @var array Holds valid template file names
+	 */
 	static protected $files = array(
 		'include_static.txt',
 		'constants.txt',
@@ -30,7 +38,7 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		foreach($items as $item) {
 
 			# scan directory if files exists
-			if($item->isFile() && in_array($item->getFilename(), self::$files) && !in_array($item->getPath(), self::$cache)) {
+			if($item->isFile() && in_array($item->getFilename(), self::$files) && !key_exists(md5($item->getPath()), self::$cache)) {
 
 				# get relative directory path
 				$dir = str_replace($typoscriptPath . DIRECTORY_SEPARATOR, '', $item->getPath());
@@ -43,13 +51,14 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 					continue;
 				}
 
-				$item = array(
+				# define template entry
+				$template = array(
 					trim('» ' . str_replace(DIRECTORY_SEPARATOR, ' › ', $dir)) . ' (hype_base)',
 					$configuration['typoscriptPath'] . $dir
 				);
 
 				# add to cache
-				array_push(self::$cache, $item);
+				self::$cache[md5($item->getPath())] = $template;
 			}
 		}
 
