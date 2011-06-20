@@ -20,6 +20,11 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 
 	static public function createTypoScript() {
 
+		# return cache if populated
+		if(count(self::$cache) > 0) {
+			return self::$cache;
+		}
+
 		# get extension configuration
 		$configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['hype_base']);
 
