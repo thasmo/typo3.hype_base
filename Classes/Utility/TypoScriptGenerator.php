@@ -28,6 +28,9 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		# get extension configuration
 		$configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['hype_base']);
 
+		# make sure to have a valid path
+		$configuration['typoscriptPath'] = rtrim(t3lib_div::fixWindowsFilePath($configuration['typoscriptPath']), '/') . '/';
+
 		# get configured path
 		$typoscriptPath = realpath(t3lib_div::getFileAbsFileName($configuration['typoscriptPath']));
 
