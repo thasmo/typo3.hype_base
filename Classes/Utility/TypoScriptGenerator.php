@@ -18,6 +18,9 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		'include_static_file.txt'
 	);
 
+	/**
+	 * @return array
+	 */
 	static public function createTypoScript() {
 
 		# return cache if populated
@@ -30,6 +33,9 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 
 		# make sure to have a valid path
 		$configuration['typoscriptPath'] = rtrim(t3lib_div::fixWindowsFilePath($configuration['typoscriptPath']), '/') . '/';
+
+		# make fileadmin path working with a hack
+		$configuration['typoscriptPath'] = preg_replace('~^fileadmin~', 'EXT:__fileadmin__', $configuration['typoscriptPath']);
 
 		# get configured path
 		$typoscriptPath = realpath(t3lib_div::getFileAbsFileName($configuration['typoscriptPath']));
