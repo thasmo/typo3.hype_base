@@ -29,7 +29,6 @@ What does it do?
 Hype Base provides the possibility to list static TypoScript files inside a template record in the field “include static (from extensions) from within a defined directory.
 Every directory within the defined inclusion directory will be listed as a separate item in the select field. In every directory within the defined TypoScript directory you can store static TypoScript files like setup.txt, constants.txt, include_static.txt, editorcfg.txt and include_static_file.txt.
 If you select an item in the select field, which represents a specific directory, the files within this directory will get included as a static TypoScript template.
-
 Screenshots
 
 Users manual
@@ -48,11 +47,13 @@ typoscriptPath
 string
 Path of the directory from which static TypoScript files are retrieved.
 
-Example
+Example 1
 typoscriptPath = EXT:key/Resources/Private/TypoScript/
+Example 2
+typoscriptPath = fileadmin/TypoScript/
 Tutorial
 No tutorial available.
 Known problems
 No problems known.
 To-Do list
-Hype Base on forge.typo3.org
+Hype Base on http://forge.typo3.org/
