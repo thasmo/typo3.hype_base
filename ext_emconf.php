@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "hype_base".
 #
-# Auto generated 20-06-2011 22:57
+# Auto generated 20-07-2011 21:12
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'author' => 'Thomas "Thasmo" Deinhamer',
 	'author_email' => 'thasmo@gmail.com',
 	'shy' => 0,
-	'version' => '1.1.4-dev',
+	'version' => '1.1.5-dev',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -42,7 +42,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:10:{s:21:"ext_conf_template.txt";s:4:"bce3";s:12:"ext_icon.gif";s:4:"d959";s:17:"ext_localconf.php";s:4:"90f2";s:14:"ext_tables.php";s:4:"1061";s:10:"readme.txt";s:4:"a455";s:42:"Classes/Hook/class.tx_hypebase_tcemain.php";s:4:"1d04";s:39:"Classes/Utility/TypoScriptGenerator.php";s:4:"79f9";s:14:"doc/manual.pdf";s:4:"1db6";s:14:"doc/manual.sxw";s:4:"10c7";s:14:"doc/manual.txt";s:4:"ec87";}',
+	'_md5_values_when_last_written' => 'a:10:{s:21:"ext_conf_template.txt";s:4:"bce3";s:12:"ext_icon.gif";s:4:"d959";s:17:"ext_localconf.php";s:4:"8d10";s:14:"ext_tables.php";s:4:"1061";s:10:"readme.txt";s:4:"a455";s:42:"Classes/Hook/class.tx_hypebase_tcemain.php";s:4:"1d04";s:39:"Classes/Utility/TypoScriptGenerator.php";s:4:"498d";s:14:"doc/manual.pdf";s:4:"a42f";s:14:"doc/manual.sxw";s:4:"190d";s:14:"doc/manual.txt";s:4:"9ec1";}',
 	'suggests' => array(
 	),
 );
