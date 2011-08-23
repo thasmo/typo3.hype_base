@@ -18,4 +18,6 @@ if(count($files) > 0) {
 	$TCA['sys_template']['columns']['include_static_file']['config']['items'] = array_merge($TCA['sys_template']['columns']['include_static_file']['config']['items'], $files);
 }
 
+unset($registry, $files);
+
 ?>
