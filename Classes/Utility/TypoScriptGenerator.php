@@ -60,11 +60,6 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 				# get current directory
 				$current = array_pop(explode(DIRECTORY_SEPARATOR, $dir));
 
-				# skip if current directory name starts with an underscore
-				if(preg_match('~^_~', $current)) {
-					continue;
-				}
-
 				# define template entry
 				$template = array(
 					trim('» ' . str_replace(DIRECTORY_SEPARATOR, ' › ', $dir)) . ' (hype_base)',
