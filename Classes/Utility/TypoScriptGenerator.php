@@ -57,9 +57,6 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 				# get relative directory path
 				$dir = str_replace($typoscriptPath . DIRECTORY_SEPARATOR, '', $item->getPath());
 
-				# get current directory
-				$current = array_pop(explode(DIRECTORY_SEPARATOR, $dir));
-
 				# define template entry
 				$template = array(
 					trim('» ' . str_replace(DIRECTORY_SEPARATOR, ' › ', $dir)) . ' (hype_base)',
