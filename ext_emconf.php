@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Hype Base',
-	'description' => 'Provides a basic typoscript/template inclusion system for developing websites.',
+	'description' => 'Automatically adds static typoscript files from within a specified directory to the static includes option inside template records.',
 	'category' => 'be',
 	'author' => 'Thomas "Thasmo" Deinhamer',
 	'author_email' => 'thasmo@gmail.com',
