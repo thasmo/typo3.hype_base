@@ -43,8 +43,8 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		$configuration['typoscriptPath'] = rtrim(t3lib_div::fixWindowsFilePath($configuration['typoscriptPath']), '/') . '/';
 
 		# get configured path
-		$typoscriptPath = realpath(t3lib_div::getFileAbsFileName($configuration['typoscriptPath']));
-		$storagePath = realpath(t3lib_div::getFileAbsFileName($configuration['storagePath']));
+		$typoscriptPath = t3lib_div::getFileAbsFileName($configuration['typoscriptPath']);
+		$storagePath = t3lib_div::getFileAbsFileName($configuration['storagePath']);
 
 		if(!file_exists($typoscriptPath) || !is_dir($typoscriptPath)) {
 			t3lib_div::sysLog('TypoScript inclusion path is not set or invalid.', 'hype_base', 0);
@@ -66,35 +66,40 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 			   in_array($item->getBasename('.' . $item->getExtension()), self::$names) &&
 			   in_array(strtolower($item->getExtension()), self::$extensions)) {
 
+				# set item path
+				$itemPath = t3lib_div::fixWindowsFilePath($item->getPath());
+
 				# get relative directory path
-				$relativeDirectoryPath = str_replace($typoscriptPath . DIRECTORY_SEPARATOR, '', $item->getPath());
+				$relativeDirectoryPath = str_replace($typoscriptPath, '', $itemPath);
 
 				# determine directory path
-				$directoryPath = $storagePath . DIRECTORY_SEPARATOR . $relativeDirectoryPath;
+				$directoryPath = $storagePath . $relativeDirectoryPath;
+
+				# create directory recursively
+				if(!file_exists($directoryPath)) {
+					t3lib_div::mkdir_deep(
+						$storagePath,
+						$relativeDirectoryPath
+					);
+				}
 
 				# determine file path
 				$filePath = ($item->getExtension() != 'txt')
-					? $directoryPath . DIRECTORY_SEPARATOR . $item->getBasename('.' . $item->getExtension()) . '.txt'
-					: $directoryPath . DIRECTORY_SEPARATOR . $item->getFilename();
-
-				# create directory recursively
-				t3lib_div::mkdir_deep(
-					$storagePath . DIRECTORY_SEPARATOR,
-					t3lib_div::fixWindowsFilePath($relativeDirectoryPath)
-				);
+					? $directoryPath . '/' . $item->getBasename('.' . $item->getExtension()) . '.txt'
+					: $directoryPath . '/' . $item->getFilename();
 
 				# copy file
-				copy($item->getRealPath(), $filePath);
+				copy(t3lib_div::fixWindowsFilePath($item->getRealPath()), $filePath);
 
 				# define template entry
 				$template = array(
-					trim('» ' . str_replace(DIRECTORY_SEPARATOR, ' › ', $relativeDirectoryPath)) . ' (hype_base)',
+					trim('» ' . str_replace('/', ' › ', $relativeDirectoryPath)) . ' (hype_base)',
 					$directoryPath
 				);
 
 				# add to cache
-				if(!key_exists(md5($item->getPath()), self::$cache)) {
-					self::$cache[md5($item->getPath())] = $template;
+				if(!key_exists(md5($itemPath), self::$cache)) {
+					self::$cache[md5($itemPath)] = $template;
 				}
 			}
 		}
