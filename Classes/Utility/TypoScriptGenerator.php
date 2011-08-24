@@ -109,6 +109,9 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 			}
 		}
 
+		# fix file permissions
+		t3lib_div::fixPermissions($absoluteStoragePath, TRUE);
+
 		# sort pathes
 		sort(self::$cache);
 
