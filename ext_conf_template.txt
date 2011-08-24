@@ -1,2 +1,5 @@
-# cat=basic/links/001; type=string; label = TypoScript Directory: This is the path of the directory from which static TypoScript files are retrieved.
+# cat=basic/links/001; type=string; label = TypoScript Path: Path of the directory from which static TypoScript files are retrieved.
 typoscriptPath =
+
+# cat=basic/links/002; type=string; label = Storage Path: Path of the directory where retrieved TypoScript files are copied to.
+storagePath = EXT:hype_base/Resources/Public/TypoScript/

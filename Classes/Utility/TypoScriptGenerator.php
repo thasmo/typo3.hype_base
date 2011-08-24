@@ -10,12 +10,20 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 	/**
 	 * @var array Holds valid template file names
 	 */
-	static protected $files = array(
-		'include_static.txt',
-		'constants.txt',
-		'setup.txt',
-		'editorcfg.txt',
-		'include_static_file.txt'
+	static protected $names = array(
+		'include_static',
+		'constants',
+		'setup',
+		'editorcfg',
+		'include_static_file',
+	);
+
+	/**
+	 * @var array Holds valid file extensions
+	 */
+	static protected $extensions = array(
+		'txt',
+		'ts'
 	);
 
 	/**
@@ -34,16 +42,18 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		# make sure to have a valid path
 		$configuration['typoscriptPath'] = rtrim(t3lib_div::fixWindowsFilePath($configuration['typoscriptPath']), '/') . '/';
 
-		# make fileadmin path working with a hack
-		$configuration['typoscriptPath'] = preg_replace('~^fileadmin~', 'EXT:__fileadmin__', $configuration['typoscriptPath']);
-
 		# get configured path
 		$typoscriptPath = realpath(t3lib_div::getFileAbsFileName($configuration['typoscriptPath']));
+		$storagePath = realpath(t3lib_div::getFileAbsFileName($configuration['storagePath']));
 
 		if(!file_exists($typoscriptPath) || !is_dir($typoscriptPath)) {
 			t3lib_div::sysLog('TypoScript inclusion path is not set or invalid.', 'hype_base', 0);
 			return;
 		}
+
+		# reset directory contents
+		t3lib_div::rmdir($storagePath, TRUE);
+		t3lib_div::mkdir($storagePath);
 
 		# get directory items
 		$items = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($typoscriptPath), RecursiveIteratorIterator::LEAVES_ONLY);
@@ -52,19 +62,40 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		foreach($items as $item) {
 
 			# scan directory if files exists
-			if($item->isFile() && in_array($item->getFilename(), self::$files) && !key_exists(md5($item->getPath()), self::$cache)) {
+			if($item->isFile() &&
+			   in_array($item->getBasename('.' . $item->getExtension()), self::$names) &&
+			   in_array(strtolower($item->getExtension()), self::$extensions)) {
 
 				# get relative directory path
-				$dir = str_replace($typoscriptPath . DIRECTORY_SEPARATOR, '', $item->getPath());
+				$relativeDirectoryPath = str_replace($typoscriptPath . DIRECTORY_SEPARATOR, '', $item->getPath());
+
+				# determine directory path
+				$directoryPath = $storagePath . DIRECTORY_SEPARATOR . $relativeDirectoryPath;
+
+				# determine file path
+				$filePath = ($item->getExtension() != 'txt')
+					? $directoryPath . DIRECTORY_SEPARATOR . $item->getBasename('.' . $item->getExtension()) . '.txt'
+					: $directoryPath . DIRECTORY_SEPARATOR . $item->getFilename();
+
+				# create directory recursively
+				t3lib_div::mkdir_deep(
+					$storagePath . DIRECTORY_SEPARATOR,
+					t3lib_div::fixWindowsFilePath($relativeDirectoryPath)
+				);
+
+				# copy file
+				copy($item->getRealPath(), $filePath);
 
 				# define template entry
 				$template = array(
-					trim('» ' . str_replace(DIRECTORY_SEPARATOR, ' › ', $dir)) . ' (hype_base)',
-					$configuration['typoscriptPath'] . $dir
+					trim('» ' . str_replace(DIRECTORY_SEPARATOR, ' › ', $relativeDirectoryPath)) . ' (hype_base)',
+					$directoryPath
 				);
 
 				# add to cache
-				self::$cache[md5($item->getPath())] = $template;
+				if(!key_exists(md5($item->getPath()), self::$cache)) {
+					self::$cache[md5($item->getPath())] = $template;
+				}
 			}
 		}
 
