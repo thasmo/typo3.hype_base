@@ -8,7 +8,7 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 	static protected $cache = array();
 
 	/**
-	 * @var array Holds valid template file names
+	 * @var array Valid template file names
 	 */
 	static protected $names = array(
 		'include_static',
@@ -19,12 +19,17 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 	);
 
 	/**
-	 * @var array Holds valid file extensions
+	 * @var array Valid file extensions
 	 */
 	static protected $extensions = array(
 		'txt',
 		'ts'
 	);
+
+	/**
+	 * @var string Path of the directory where files are copied to
+	 */
+	static protected $storagePath = 'EXT:hype_base/Resources/Public/TypoScript/';
 
 	/**
 	 * @return array
@@ -44,7 +49,7 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 
 		# get configured path
 		$typoscriptPath = t3lib_div::getFileAbsFileName($configuration['typoscriptPath']);
-		$storagePath = t3lib_div::getFileAbsFileName($configuration['storagePath']);
+		$absoluteStoragePath = t3lib_div::getFileAbsFileName(self::$storagePath);
 
 		if(!file_exists($typoscriptPath) || !is_dir($typoscriptPath)) {
 			t3lib_div::sysLog('TypoScript inclusion path is not set or invalid.', 'hype_base', 0);
@@ -52,8 +57,8 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		}
 
 		# reset directory contents
-		t3lib_div::rmdir($storagePath, TRUE);
-		t3lib_div::mkdir($storagePath);
+		t3lib_div::rmdir($absoluteStoragePath, TRUE);
+		t3lib_div::mkdir($absoluteStoragePath);
 
 		# get directory items
 		$items = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($typoscriptPath), RecursiveIteratorIterator::LEAVES_ONLY);
@@ -73,12 +78,12 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 				$relativeDirectoryPath = str_replace($typoscriptPath, '', $itemPath);
 
 				# determine directory path
-				$directoryPath = $storagePath . $relativeDirectoryPath;
+				$directoryPath = $absoluteStoragePath . $relativeDirectoryPath;
 
 				# create directory recursively
 				if(!file_exists($directoryPath)) {
 					t3lib_div::mkdir_deep(
-						$storagePath,
+						$absoluteStoragePath,
 						$relativeDirectoryPath
 					);
 				}
@@ -94,7 +99,7 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 				# define template entry
 				$template = array(
 					trim('» ' . str_replace('/', ' › ', $relativeDirectoryPath)) . ' (hype_base)',
-					$directoryPath
+					self::$storagePath . $relativeDirectoryPath
 				);
 
 				# add to cache
