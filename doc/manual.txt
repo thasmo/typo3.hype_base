@@ -34,7 +34,7 @@ Screenshots
 Users manual
 A user manual does not apply as this extension is intended to be used by administrators and developers only.
 Administration
-From within a template record it is possible to select the static TypoScript files using the field “Include static (from extensions)” which are being added by the extension automatically.
+From within a template record it is possible to select the static TypoScript files using the field “Include static (from extensions)” which are being added by the extension automatically. Only valid named TypoScript files (setup.txt, constants.txt, include_static.txt, editorcfg.txt and include_static_file.txt) will get included. Additionally you can use the file extension “ts” instead of “txt”.
 Just open a template record, locate the select field and select the static TypoScript files to include them on the page.
 Configuration
 Configuring the extension is easy. In the extension manager it’s possible to define the path of the directory where all static TypoScript files are stored. It’s also possible to prefix the path with a prefix like “EXT:key” which gets resolved to the actual path.
