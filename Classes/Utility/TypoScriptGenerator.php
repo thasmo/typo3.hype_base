@@ -66,10 +66,13 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 		# loop thru items
 		foreach($items as $item) {
 
+			# get file extension
+			$extension = strtolower(pathinfo($item->getFilename(), PATHINFO_EXTENSION));
+
 			# scan directory if files exists
 			if($item->isFile() &&
-			   in_array($item->getBasename('.' . $item->getExtension()), self::$names) &&
-			   in_array(strtolower($item->getExtension()), self::$extensions)) {
+			   in_array($item->getBasename('.' . $extension), self::$names) &&
+			   in_array($extension, self::$extensions)) {
 
 				# set item path
 				$itemPath = t3lib_div::fixWindowsFilePath($item->getPath());
@@ -89,8 +92,8 @@ class Tx_HypeBase_Utility_TypoScriptGeneratorUtility {
 				}
 
 				# determine file path
-				$filePath = ($item->getExtension() != 'txt')
-					? $directoryPath . '/' . $item->getBasename('.' . $item->getExtension()) . '.txt'
+				$filePath = ($extension != 'txt')
+					? $directoryPath . '/' . $item->getBasename('.' . $extension) . '.txt'
 					: $directoryPath . '/' . $item->getFilename();
 
 				# copy file
