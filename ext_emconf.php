@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "hype_base".
 #
-# Auto generated 16-09-2011 10:42
+# Auto generated 07-10-2011 23:42
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'author' => 'Thomas "Thasmo" Deinhamer',
 	'author_email' => 'thasmo@gmail.com',
 	'shy' => 0,
-	'version' => '1.1.7',
+	'version' => '1.1.8',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
