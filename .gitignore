@@ -1,0 +1,9 @@
+# OS specific files
+Thumbs.db
+.DS_Store
+
+# IDE specific files
+*.komodoproject
+
+# Project specific files
+/Resources
